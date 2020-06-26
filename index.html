@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/732ce0cd00.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Allura"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <title>Inspiration Daily</title>
+  </head>
+
+  <body onload="getQuote()">
+    <nav class="navbar" id="nav">
+      <a class="navbar-brand mx-auto" href="index.html"
+        >Your Daily Inspiration</a
+      >
+    </nav>
+
+    <div class="container">
+      <!-- <div class="row">
+        <img
+          src="https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+          alt="road"
+          class="img-fluid w-100"
+        /> -->
+      <button
+        type="button"
+        id="new-quote"
+        class="btn btn-secondary btn-lg d-flex mx-auto"
+      >
+        Get new quote
+      </button>
+      <!-- <button onclick="go_full_screen()">
+        <i class="fas fa-expand"></i>
+      </button> -->
+      <div class="content" id="daily-quotes"></div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"
+      integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#new-quote").on("click", function (e) {
+          getQuote();
+        });
+      });
+    </script>
+    <script>
+      function getQuote() {
+        const url = "https://type.fit/api/quotes";
+        axios
+          .get(url)
+          .then((response) => response.data) // DIFFERENT FROM FETCH: response.data instead of response.json()
+          .then((quote) => {
+            {
+              const randomQuote =
+                quote[Math.floor(Math.random() * Math.floor(1643))];
+              console.log(randomQuote);
+              const quoteHtml = `
+              <p class="quote"><strong>${randomQuote.text}</strong></p>
+              <p class="author"> - ${randomQuote.author}</p>
+            `;
+              document.querySelector("#daily-quotes").innerHTML = quoteHtml;
+            }
+          });
+      }
+    </script>
+    <script>
+      function go_full_screen() {
+        var elem = document.documentElement;
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+          elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen();
+        }
+      }
+    </script>
+  </body>
+</html>
